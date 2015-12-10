@@ -4,13 +4,12 @@ require 'YAML'
 class TellStory
   def initialize
     p 'Please use mac and insure the "say" function works well' if check_tools
-
   end
 
   def run
-    stories_list = Dir['./stories/*']
+    stories_list = Dir["#{lib_path}/stories/*"]
     stories_list.shuffle!
-    jokes_list = Dir['./jokes/*']
+    jokes_list = Dir["#{lib_path}/jokes/*"]
     jokes_list.shuffle!
 
     tell_story(jokes_list.shift, '笑话')
@@ -18,6 +17,10 @@ class TellStory
   end
 
   private
+
+  def lib_path
+    File.expand_path('../', __FILE__)
+  end
 
   def tell_story(filename, type)
     story = YAML.load(File.read(filename))
